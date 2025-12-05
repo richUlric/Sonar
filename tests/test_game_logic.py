@@ -27,12 +27,19 @@ class TestGameLogic(unittest.TestCase):
         self.assertEqual(self.game.winner, "X")
 
     def test_draw(self):
-        self.game.board = [['X', 'O', 'X'],
-                           ['X', 'O', 'O'],
-                           ['O', 'X', 'X']]
-        self.assertTrue(self.game.check_draw())
-        self.game.on_click(1,1) # Should not change anything
-        self.assertTrue(self.game.is_draw)
+        # Séquence de jeu menant à un match nul
+        self.game.on_click(0, 0) # X
+        self.game.on_click(1, 1) # O
+        self.game.on_click(0, 1) # X
+        self.game.on_click(0, 2) # O
+        self.game.on_click(2, 0) # X
+        self.game.on_click(1, 0) # O
+        self.game.on_click(1, 2) # X
+        self.game.on_click(2, 2) # O
+        self.game.on_click(2, 1) # X - C'est le dernier coup, qui remplit le plateau
+
+        self.assertIsNone(self.game.winner) # Personne n'a gagné
+        self.assertTrue(self.game.is_draw)  # La partie est un match nul
 
 
 if __name__ == '__main__':
