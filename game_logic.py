@@ -9,7 +9,10 @@ class GameLogic:
         self.is_draw = False
 
     def on_click(self, row, col):
-        if self.board[row][col] == "" and not self.winner:
+        if self.winner or self.is_draw:
+            return False # Le jeu est déjà terminé
+
+        if self.board[row][col] == "":
             self.board[row][col] = self.current_player
             if self.check_win(self.current_player):
                 self.winner = self.current_player
