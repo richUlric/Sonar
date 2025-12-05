@@ -26,6 +26,15 @@ class TestGameLogic(unittest.TestCase):
         self.assertTrue(self.game.check_win("X"))
         self.assertEqual(self.game.winner, "X")
 
+    def test_win_anti_diag(self):
+        self.game.on_click(0, 2) # X
+        self.game.on_click(1, 0) # O
+        self.game.on_click(1, 1) # X
+        self.game.on_click(1, 2) # O
+        self.game.on_click(2, 0) # X
+        self.assertTrue(self.game.check_win("X"))
+        self.assertEqual(self.game.winner, "X")
+
     def test_draw(self):
         # Séquence de jeu menant à un match nul
         self.game.on_click(0, 0) # X
