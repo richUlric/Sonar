@@ -50,6 +50,15 @@ class TestGameLogic(unittest.TestCase):
         self.assertIsNone(self.game.winner) # Personne n'a gagné
         self.assertTrue(self.game.is_draw)  # La partie est un match nul
 
+    def test_click_after_game_over(self):
+        # Win condition
+        self.game.on_click(0, 0) # X
+        self.game.on_click(1, 0) # O
+        self.game.on_click(0, 1) # X
+        self.game.on_click(1, 1) # O
+        self.game.on_click(0, 2) # X
+        # Game is won by X, further clicks should be ignored
+        self.assertFalse(self.game.on_click(2, 2))
 
 if __name__ == '__main__':
     unittest.main()
